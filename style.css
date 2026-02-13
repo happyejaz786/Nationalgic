@@ -388,3 +388,47 @@ body {
 @media (max-width: 768px) {
     .message-card { flex-direction: column; text-align: center; }
 }
+/* --- Mobile Responsive Settings --- */
+@media (max-width: 768px) {
+    /* Header ki settings */
+    .header-container {
+        flex-direction: column; /* Logo aur Text ek ke niche ek */
+        text-align: center;
+        padding: 10px;
+    }
+
+    .college-name {
+        font-size: 1.2rem; /* Mobile par naam thoda chota */
+    }
+
+    /* Navbar ko scrollable ya vertical banana */
+    .nav-links {
+        flex-direction: column; /* Menu items ek ke niche ek */
+        gap: 10px;
+        padding: 10px 0;
+    }
+
+    .nav-links li {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Dropdown mobile par hamesha dikhe ya click par */
+    .dropdown-content {
+        position: static; /* Mobile par dropdown niche hi khulega */
+        box-shadow: none;
+        background: #f1f1f1;
+    }
+
+    /* Message Section Mobile settings */
+    .message-card {
+        flex-direction: column; /* Photo upar, Message niche */
+        padding: 20px;
+        text-align: center;
+    }
+
+    .message-photo img {
+        width: 150px;
+        height: 150px;
+    }
+}
