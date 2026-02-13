@@ -1,0 +1,390 @@
+/* =========================================
+   1. FONTS & BASIC SETUP
+   ========================================= */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Poppins:wght@300;400;500;800&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+    overflow-x: hidden;
+}
+
+/* =========================================
+   2. HEADER SECTION (Aapke Bade Fonts Ke Saath)
+   ========================================= */
+.main-header {
+    background: #ffffff;
+    padding: 20px 0;
+    border-bottom: 5px solid #004d40;
+    width: 100%;
+}
+
+.header-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 40px;
+}
+
+/* Logo Area */
+.logo-area {
+    flex-shrink: 0;
+}
+
+.college-logo {
+    height: 140px;
+    width: auto;
+    display: block;
+}
+
+/* Text Area */
+.text-area-centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.college-name {
+    font-family: 'Cinzel', serif;
+    font-size: 2.8rem; /* Bada Font */
+    color: #004d40;
+    margin: 0;
+    line-height: 1.1;
+    white-space: nowrap;
+}
+
+/* Minority Tag */
+.minority-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin: 8px 0;
+}
+
+.m-line {
+    height: 1px;
+    width: 40px;
+    background-color: #d4af37;
+}
+
+.minority-tag {
+    color: #d4af37;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 0;
+    font-size: 1.5rem; /* Aapka pasandeeda bada size */
+}
+
+.header-address {
+    color: #555;
+    font-size: 1.3rem; /* Aapka pasandeeda bada size */
+    margin: 5px 0 0;
+    font-weight: 800; /* Extra Bold */
+}
+
+/* =========================================
+   3. NAVIGATION BAR
+   ========================================= */
+.navbar {
+    background-color: #004d40;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    position: relative;
+}
+
+.nav-links li a {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 18px 25px;
+    display: block;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: 0.3s;
+}
+
+.nav-links li a:hover, .active {
+    background-color: #d4af37;
+    color: #004d40;
+}
+
+/* Dropdown Menu */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    min-width: 220px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    z-index: 1001;
+    top: 100%;
+    left: 0;
+    list-style: none;
+    padding: 0;
+    border-top: 3px solid #d4af37;
+}
+
+.dropdown-content li a {
+    color: #333;
+    padding: 12px 20px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.dropdown-content li a:hover {
+    background-color: #f9f9f9;
+    color: #004d40;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* =========================================
+   4. TAGLINE (Fixed Spacing)
+   ========================================= */
+.tagline {
+    text-align: center;
+    padding: 25px 10px; /* Padding kam kar di */
+    margin: 15px 0;
+    background-color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.0rem; /* Font bada hi rakha hai */
+    color: #004d40;
+    font-style: italic;
+    font-weight: 500;
+    letter-spacing: 1px;
+    position: relative;
+}
+
+.tagline::before, .tagline::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 1.5px;
+    background-color: #d4af37;
+    margin: 8px auto;
+}
+
+/* =========================================
+   5. ADMISSION NOTICE (New Bilingual Layout)
+   ========================================= */
+.admission-notice-section {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 0 15px;
+}
+
+.notice-card {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    border-top: 5px solid #d4af37;
+    padding: 25px 30px;
+}
+
+.notice-header {
+    text-align: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+
+.notice-header h2 {
+    color: #004d40;
+    font-size: 1.6rem;
+    margin: 0 0 5px 0;
+}
+
+.sub-text {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0;
+}
+
+/* Bilingual Columns */
+.bilingual-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.lang-col {
+    flex: 1;
+}
+
+.lang-col h3 {
+    color: #d4af37;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #f0f0f0;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.vertical-line {
+    width: 1px;
+    background-color: #ddd;
+    margin: 10px 0;
+}
+
+.lang-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.lang-col ul li {
+    padding: 8px 0;
+    border-bottom: 1px dashed #eee;
+    font-size: 0.95rem;
+    color: #333;
+    line-height: 1.4;
+}
+
+.lang-col ul li strong {
+    color: #004d40;
+}
+
+/* =========================================
+   6. FOOTER SECTION
+   ========================================= */
+.main-footer {
+    background-color: #002b24;
+    color: white;
+    padding: 20px 0;
+    margin-top: 50px;
+    border-top: 3px solid #d4af37;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-left p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.hit-counter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 5px 15px;
+    border-radius: 5px;
+}
+
+.hit-counter span {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* =========================================
+   7. RESPONSIVE DESIGN
+   ========================================= */
+@media (max-width: 900px) {
+    .header-container { flex-direction: column; gap: 15px; }
+    .college-name { font-size: 1.8rem; white-space: normal; }
+    .nav-links { flex-direction: column; text-align: center; }
+    .bilingual-grid { flex-direction: column; gap: 0; }
+    .vertical-line { display: none; }
+    .english-list { margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
+    .footer-container { flex-direction: column; gap: 15px; text-align: center; }
+}
+.message-section {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* Card ka Main Style */
+.message-card {
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05); /* Shuru mein halka shadow */
+    border-left: 10px solid #004d40;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Smooth jhatka effect */
+    cursor: pointer;
+}
+
+/* 🔥 HOVER EFFECT: Card upar uthega aur shadow badhegi */
+.message-card:hover {
+    transform: translateY(-10px) scale(1.02); /* Thoda bada aur upar */
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15); /* Gehra shadow */
+    border-left-color: #d4af37; /* Border ka rang Gold ho jayega */
+}
+
+/* Photo ka Style */
+.message-photo img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #eee;
+    transition: all 0.5s ease;
+}
+
+/* 🔥 HOVER EFFECT: Photo ghumegi aur border Gold hoga */
+.message-card:hover .message-photo img {
+    border-color: #d4af37;
+    transform: rotate(5deg); /* Halki si teerchi hogi */
+    filter: brightness(1.1); /* Thodi chamak badhegi */
+}
+
+/* Quote icon ka rang badlega */
+.message-card:hover .quote-icon {
+    opacity: 0.5;
+    color: #004d40;
+}
+
+.message-content p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #333;
+    font-style: italic;
+}
+
+.hindi-text {
+    display: block;
+    margin-top: 15px;
+    color: #666;
+    font-weight: 500;
+}
+
+/* Mobile setting */
+@media (max-width: 768px) {
+    .message-card { flex-direction: column; text-align: center; }
+}
