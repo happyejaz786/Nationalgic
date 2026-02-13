@@ -161,7 +161,7 @@ function loadHeader() {
         <header class="main-header">
             <div class="header-container">
                 <div class="logo-area">
-                    <img src="images/logo.jpg" alt="Logo" class="college-logo">
+                    <img src="logo.jpg" alt="Logo" class="college-logo">
                 </div>
                 <div class="text-area-centered">
                     <h1 class="college-name">National Girls Inter College</h1>
@@ -211,5 +211,6 @@ function toggleMenu() {
         nav.style.display = "flex";
     }
 }
+
 
 window.onload = loadHeader;
