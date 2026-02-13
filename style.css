@@ -427,8 +427,65 @@ body {
         text-align: center;
     }
 
+   /* --- Mobile Sidebar Sidebar Logic --- */
+
+/* 1. Mobile par menu ko screen se bahar bhejna */
+@media (max-width: 768px) {
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: -100%; /* Shuru mein left side se bahar rahega */
+        width: 250px;
+        height: 100vh;
+        background: #004d40; /* Dark background professional lagega */
+        transition: 0.4s ease-in-out;
+        z-index: 1000;
+        padding-top: 60px;
+        display: block; /* Flex ko hata kar block karenge */
+    }
+
+    /* 2. Menu Links ko Vertical karna */
+    .nav-links {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .nav-links li {
+        width: 100%;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .nav-links li a {
+        padding: 15px 20px;
+        display: block;
+        color: white !important;
+    }
+
+    /* 3. Dropdown ko mobile par simple dikhana */
+    .dropdown-content {
+        position: static;
+        background: rgba(0,0,0,0.2);
+        box-shadow: none;
+        display: none; /* Default band */
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block; /* Hover karne par niche hi khulega */
+    }
+
+    /* 4. Hamburger Button ka Magic (Jab user open kare) */
+    /* Agar aapko button chahiye toh aapko HTML mein ek checkbox add karna hoga, 
+       warna abhi ke liye ye code aapke menu ko sidebar mein convert kar dega */
+}
+
+/* Desktop layout ko waisa hi rehne dein */
+@media (min-width: 769px) {
+    .navbar { left: 0; position: relative; height: auto; width: auto; }
+}
+
     .message-photo img {
         width: 150px;
         height: 150px;
     }
+
 }
