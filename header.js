@@ -146,9 +146,9 @@ function loadHeader() {
                             <li><a href="principal.html">Principal's Message</a></li>
                         </ul>
                     </li>
-                    <li><a href="admission.html">Admission</a></li>
-                    <li><a href="gallery.html">Gallery</a></li>
-                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="#">Admission</a></li>
+                    <li><a href="#">Gallery</a></li>
+                    <li><a href="#">Contact Us</a></li>
                 </ul>
             </div>
         </nav>
@@ -188,5 +188,6 @@ function toggleMenu() {
     const nav = document.getElementById("navLinks");
     nav.classList.toggle("active");
 }
+
 
 window.onload = loadHeader;
