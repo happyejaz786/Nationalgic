@@ -86,7 +86,11 @@
             }
         }
 
-        window.onload = loadAlumni;
+        // Ye tarika purane scripts ko disturb nahi karta
+window.addEventListener('load', () => {
+    loadAlumni();
+});
     </script>
 </body>
+
 </html>
