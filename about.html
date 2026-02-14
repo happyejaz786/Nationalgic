@@ -5,6 +5,144 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us | NGIC</title>
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* Main Container */
+        .content-section {
+            padding: 40px 20px;
+            background-color: #f0f4f3;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* White Card Style */
+        .content-card {
+            background: #ffffff;
+            max-width: 1000px;
+            width: 100%;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            border-radius: 10px;
+            padding: 40px;
+            border-top: 5px solid #004d40;
+        }
+
+        /* --- TITLE CENTERING (Yahan hai magic) --- */
+        .section-title {
+            text-align: center; /* Text ko center karta hai */
+            margin-bottom: 30px;
+        }
+
+        .section-title h2 {
+            color: #004d40;
+            font-family: 'serif'; /* Agar Cinzel nahi hai to serif lega */
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .title-underline {
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: #d4af37; /* Gold Line */
+            margin: 0 auto; /* Auto margin se line beech mein aati hai */
+            border-radius: 2px;
+        }
+
+        /* Text Styling */
+        .text-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #444;
+            margin-bottom: 20px;
+            text-align: justify; /* Paragraph ko dono taraf barabar karega */
+        }
+
+        .hindi-text {
+            color: #004d40;
+            font-weight: 500;
+        }
+
+        /* Image Styling */
+        .about-image img {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Mission & Vision Boxes */
+        .mission-vision {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .mv-box {
+            flex: 1;
+            background: #f9fdfc;
+            padding: 20px;
+            border-left: 5px solid #d4af37;
+            border-radius: 4px;
+            min-width: 250px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .mv-box h3 {
+            color: #004d40;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        /* Facilities List */
+        .facilities-box {
+            background: #004d40;
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+        }
+
+        .facilities-box h3 {
+            color: #d4af37;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            text-align: center; /* Is heading ko bhi center kiya */
+        }
+
+        .facility-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .facility-list li {
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Divider */
+        .divider {
+            border: 0;
+            height: 1px;
+            background: #e0e0e0;
+            margin: 40px 0;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .content-card { padding: 20px; }
+            .section-title h2 { font-size: 1.5rem; }
+            .facility-list { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
 
