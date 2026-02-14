@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact & Registration | NGIC</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .contact-wrapper { display: grid; grid-template-columns: 1fr 1.5fr; gap: 40px; max-width: 1100px; margin: 40px auto; padding: 20px; }
+        .contact-info { background: #004d40; color: white; padding: 30px; border-radius: 15px; }
+        .form-container { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); border-top: 6px solid #d4af37; }
+        .tab-buttons { display: flex; gap: 10px; margin-bottom: 25px; }
+        .tab-btn { flex: 1; padding: 10px; border: none; background: #eee; cursor: pointer; border-radius: 5px; font-weight: bold; transition: 0.3s; }
+        .tab-btn.active { background: #d4af37; color: white; }
+        .form-group { margin-bottom: 15px; }
+        input, textarea, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; margin-top: 5px; box-sizing: border-box; }
+        .btn-submit { background: #004d40; color: white; padding: 12px; border: none; border-radius: 5px; cursor: pointer; width: 100%; font-size: 1.1rem; }
+        @media (max-width: 768px) { .contact-wrapper { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div id="dynamic-header"></div>
+    <div class="contact-wrapper">
+        <div class="contact-info">
+            <h2 style="font-family: 'Cinzel', serif;">Get in Touch</h2>
+            <p>📍 National Girls Inter College, Shahjahanpur</p>
+            <p>📞 +91-XXXXXXXXXX</p>
+            <hr style="border-color: #d4af37;">
+            <p><b>Note:</b> Alumni apni photo upload kar sakte hain.</p>
+        </div>
+
+        <div class="form-container">
+            <div class="tab-buttons">
+                <button class="tab-btn active" onclick="switchForm('Inquiry')">Admission Inquiry</button>
+                <button class="tab-btn" onclick="switchForm('Alumni')">Alumni Registration</button>
+            </div>
+
+            <form id="multiForm">
+                <input type="hidden" name="FormType" id="formType" value="Inquiry">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" name="Name" required>
+                </div>
+
+                <div id="dynamic-fields">
+                    <div class="form-group">
+                        <label>Mobile / Email</label>
+                        <input type="text" name="EmailOrPhone" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea name="Message" rows="3" required></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit" id="submitBtn">Submit Details</button>
+            </form>
+            <div id="statusMsg" style="text-align: center; margin-top: 15px; font-weight: bold;"></div>
+        </div>
+    </div>
+
+    <script src="header.js"></script>
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwZQjj8RSalTHPjXMpEZd9xKbTHSJur8ULbMXZj1PNhRuM522Vrzta-JPDb6yHqwT-c/exec';
+
+        function switchForm(type) {
+            document.getElementById('formType').value = type;
+            const fields = document.getElementById('dynamic-fields');
+            const btns = document.querySelectorAll('.tab-btn');
+            btns.forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if(type === 'Alumni') {
+                fields.innerHTML = `
+                    <div class="form-group"><label>Batch</label><input type="text" name="Batch" required></div>
+                    <div class="form-group"><label>Designation</label><input type="text" name="Designation" required></div>
+                    <div class="form-group"><label>Upload Photo</label><input type="file" name="PhotoFile" accept="image/*"></div>
+                `;
+            } else {
+                fields.innerHTML = `<div class="form-group"><label>Mobile / Email</label><input type="text" name="EmailOrPhone" required></div>`;
+            }
+        }
+
+        const form = document.getElementById('multiForm');
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            const submitBtn = document.getElementById('submitBtn');
+            const statusMsg = document.getElementById('statusMsg');
+            
+            submitBtn.disabled = true;
+            statusMsg.innerHTML = "Uploading Data & Photo... ⏳";
+
+            const fr = new FileReader();
+            const fileInput = form.querySelector('input[type="file"]');
+            
+            if (fileInput && fileInput.files[0]) {
+                fr.readAsDataURL(fileInput.files[0]);
+                fr.onload = () => {
+                    const base64 = fr.result.split(',')[1];
+                    const formData = new FormData(form);
+                    const obj = {
+                        base64: base64,
+                        type: fileInput.files[0].type,
+                        name: fileInput.files[0].name
+                    };
+                    // Sabhi fields ko object mein daalein
+                    formData.forEach((value, key) => { if(key !== 'PhotoFile') obj[key] = value; });
+                    
+                    sendData(obj);
+                };
+            } else {
+                const formData = new FormData(form);
+                const obj = {};
+                formData.forEach((value, key) => obj[key] = value);
+                sendData(obj);
+            }
+        });
+
+        function sendData(obj) {
+            fetch(scriptURL, {
+                method: 'POST',
+                body: JSON.stringify(obj)
+            })
+            .then(res => res.text())
+            .then(data => {
+                document.getElementById('statusMsg').innerHTML = "Success! Data & Photo Saved. 🎉";
+                document.getElementById('statusMsg').style.color = "green";
+                form.reset();
+                document.getElementById('submitBtn').disabled = false;
+            })
+            .catch(err => {
+                document.getElementById('statusMsg').innerHTML = "Error occurred!";
+                document.getElementById('submitBtn').disabled = false;
+            });
+        }
+    </script>
+</body>
+</html>
