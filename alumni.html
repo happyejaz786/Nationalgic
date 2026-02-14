@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Alumni | NGIC</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .alumni-header { text-align: center; padding: 40px 20px; }
+        .alumni-header h2 { font-family: 'Cinzel', serif; color: #004d40; font-size: 2.5rem; }
+        .alumni-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto 50px; padding: 0 20px; }
+        .alumni-card { background: #fff; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); padding: 30px; text-align: center; border-top: 6px solid #d4af37; transition: 0.3s; }
+        .alumni-card:hover { transform: translateY(-10px); }
+        .alumni-card img { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 4px solid #004d40; margin-bottom: 20px; }
+        .batch-tag { background: #004d40; color: #fff; padding: 5px 15px; border-radius: 25px; font-size: 0.85rem; font-weight: bold; }
+        .alumni-name { color: #004d40; margin: 15px 0 5px; font-size: 1.5rem; font-family: 'Cinzel', serif; }
+        .alumni-msg { font-style: italic; color: #666; font-size: 0.95rem; line-height: 1.5; }
+    </style>
+</head>
+<body>
+
+    <div id="dynamic-header"></div>
+    <p class="tagline">Empowering Daughters, Building Future</p>
+
+    <div class="alumni-header">
+        <h2>Our Distinguished Alumni</h2>
+    </div>
+
+    <div id="status-msg" style="text-align:center; padding:50px; color: #004d40; font-weight: bold;">
+        Bismillah... Alumni data load ho raha hai...
+    </div>
+
+    <div class="alumni-grid" id="alumni-grid"></div>
+
+    <script src="header.js"></script>
+
+    <script>
+        // Aapki nayi Sheet ID yahan hai
+        const sheetID = "1Ogkm-qycV58x9QGIq-oG8mY8oPREU_lAocXRJR4bDyc";
+        // Vizualization API ka use kar rahe hain jo sabse zyada stable hai
+        const dataURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
+
+        async function loadAlumni() {
+            const grid = document.getElementById('alumni-grid');
+            const status = document.getElementById('status-msg');
+
+            try {
+                const response = await fetch(dataURL);
+                const text = await response.text();
+                
+                // Google JSON response ko parse karna
+                const tempData = JSON.parse(text.substring(47).slice(0, -2));
+                const rows = tempData.table.rows;
+
+                if (!rows || rows.length === 0) {
+                    status.innerHTML = "Sheet mil gayi par lagta hai data khali hai!";
+                    return;
+                }
+
+                status.style.display = 'none';
+                grid.innerHTML = '';
+
+                rows.forEach(row => {
+                    // Columns: A=Name, B=Batch, C=Designation, D=Photo, E=Message
+                    const name = row.c[0] ? row.c[0].v : '';
+                    const batch = row.c[1] ? row.c[1].v : 'N/A';
+                    const desig = row.c[2] ? row.c[2].v : '';
+                    const photo = row.c[3] ? row.c[3].v : 'images/default-user.jpg';
+                    const msg = row.c[4] ? row.c[4].v : '';
+
+                    if (name) {
+                        grid.innerHTML += `
+                            <div class="alumni-card">
+                                <img src="${photo}" alt="${name}" onerror="this.src='https://via.placeholder.com/150?text=No+Photo'">
+                                <br><span class="batch-tag">Batch: ${batch}</span>
+                                <h3 class="alumni-name">${name}</h3>
+                                <p style="color:#d4af37; font-weight:600; margin-bottom:10px;">${desig}</p>
+                                <p class="alumni-msg">"${msg}"</p>
+                            </div>
+                        `;
+                    }
+                });
+            } catch (error) {
+                console.error("Fetch error:", error);
+                status.innerHTML = "<b>Connection Error!</b><br>Kripya check karein ki Google Sheet 'Anyone with the link can view' par set hai.";
+            }
+        }
+
+        window.onload = loadAlumni;
+    </script>
+</body>
+</html>
