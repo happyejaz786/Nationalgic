@@ -6,7 +6,7 @@
     <title>Our Alumni | National Girls Inter College</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Alumni Page Specific Styling */
+        /* Alumni Page Styles */
         .alumni-header { text-align: center; padding: 40px 20px; background: #fff; }
         .alumni-header h2 { font-family: 'Cinzel', serif; color: #004d40; font-size: 2.5rem; margin-bottom: 10px; }
         
@@ -32,8 +32,8 @@
         .alumni-card:hover { transform: translateY(-10px); }
 
         .alumni-card img { 
-            width: 140px; 
-            height: 140px; 
+            width: 150px; 
+            height: 150px; 
             border-radius: 50%; 
             object-fit: cover; 
             border: 4px solid #004d40; 
@@ -56,6 +56,14 @@
             font-family: 'Cinzel', serif; 
         }
 
+        .alumni-desig {
+            color: #d4af37;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
         .alumni-msg { 
             font-style: italic; 
             color: #666; 
@@ -64,9 +72,7 @@
         }
 
         #status-msg { text-align: center; font-size: 1.2rem; color: #004d40; padding: 50px; font-weight: bold; }
-        
-        /* Tagline style agar header.js mein nahi hai */
-        .tagline { text-align: center; color: #004d40; font-weight: bold; margin-top: -10px; margin-bottom: 20px; }
+        .tagline { text-align: center; color: #004d40; font-weight: bold; margin-bottom: 20px; }
     </style>
 </head>
 <body>
@@ -76,17 +82,17 @@
 
     <div class="alumni-header">
         <h2>Our Distinguished Alumni</h2>
-        <p style="color: #666;">Celebrating the success of our bright stars.</p>
+        <p style="color: #666;">Inspiring stories of our former students.</p>
     </div>
 
-    <div id="status-msg">Bismillah... Connecting to Alumni Database...</div>
+    <div id="status-msg">Bismillah... Fetching Alumni Gallery...</div>
 
     <div class="alumni-grid" id="alumni-grid"></div>
 
     <script src="header.js"></script>
 
     <script>
-        // Google Sheet Details
+        // Google Sheet ID & URL Setup
         const sheetID = "1Ogkm-qycV58x9QGIq-oG8mY8oPREU_lAocXRJR4bDyc";
         const dataURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
 
@@ -98,12 +104,12 @@
                 const response = await fetch(dataURL);
                 const text = await response.text();
                 
-                // Parsing Google's JSON response
-                const tempData = JSON.parse(text.substring(47).slice(0, -2));
-                const rows = tempData.table.rows;
+                // Google JSON data formatting
+                const jsonData = JSON.parse(text.substring(47).slice(0, -2));
+                const rows = jsonData.table.rows;
 
                 if (!rows || rows.length === 0) {
-                    status.innerHTML = "Sheet connected, but no data found.";
+                    status.innerHTML = "No data found in Google Sheet!";
                     return;
                 }
 
@@ -111,35 +117,38 @@
                 grid.innerHTML = '';
 
                 rows.forEach(row => {
-                    // Mapping columns: A=Name, B=Batch, C=Designation, D=Photo, E=Message
+                    // Mapping: A=Name(0), B=Batch(1), C=Designation(2), D=Photo(3), E=Message(4)
                     const name = row.c[0] ? row.c[0].v : '';
                     const batch = row.c[1] ? row.c[1].v : 'N/A';
                     const desig = row.c[2] ? row.c[2].v : '';
+                    
+                    // GitHub Folder Path handling
+                    // Google Sheet me likhe: images/student1.jpg
                     const photo = row.c[3] ? row.c[3].v : 'images/default-user.jpg';
+                    
                     const msg = row.c[4] ? row.c[4].v : '';
 
                     if (name) {
                         grid.innerHTML += `
                             <div class="alumni-card">
-                                <img src="${photo}" alt="${name}" onerror="this.src='https://via.placeholder.com/150?text=No+Photo'">
-                                <br><span class="batch-tag">Batch: ${batch}</span>
+                                <img src="${photo}" alt="${name}" onerror="this.src='https://via.placeholder.com/150?text=Alumni+Photo'">
+                                <br>
+                                <span class="batch-tag">Batch: ${batch}</span>
                                 <h3 class="alumni-name">${name}</h3>
-                                <p style="color:#d4af37; font-weight:600; margin-bottom:10px;">${desig}</p>
+                                <p class="alumni-desig">${desig}</p>
                                 <p class="alumni-msg">"${msg}"</p>
                             </div>
                         `;
                     }
                 });
             } catch (error) {
-                console.error("Error:", error);
-                status.innerHTML = "<b>Connection Error!</b><br>Please refresh or check internet.";
+                console.error("Error loading data:", error);
+                status.innerHTML = "<b>Connection Error!</b><br>Please check Google Sheet permissions.";
             }
         }
 
-        // Dono scripts ko saath chalane ka behtareen tarika
-        window.addEventListener('load', () => {
-            loadAlumni();
-        });
+        // Ensuring both header and alumni data load together
+        window.addEventListener('load', loadAlumni);
     </script>
 </body>
 </html>
