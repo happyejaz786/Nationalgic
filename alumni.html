@@ -3,143 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Alumni | National Girls Inter College</title>
+    <title>Admissions | NGIC</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Alumni Page Specific Styling */
-        .alumni-header { text-align: center; padding: 40px 20px; background: #fff; }
-        .alumni-header h2 { font-family: 'Cinzel', serif; color: #004d40; font-size: 2.5rem; margin-bottom: 10px; }
+        .admission-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+        .section-title {
+            color: #004d40;
+            border-bottom: 3px solid #d4af37;
+            display: inline-block;
+            margin-bottom: 20px;
+            padding-bottom: 5px;
+            font-family: 'Cinzel', serif;
+        }
+        .info-box {
+            background: #f9fbf9;
+            padding: 25px;
+            border-left: 5px solid #004d40;
+            margin-bottom: 30px;
+            border-radius: 0 10px 10px 0;
+        }
+        /* Document Columns Layout */
+        .doc-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .doc-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .doc-list li {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        .doc-list li::before {
+            content: "✓ ";
+            color: #d4af37;
+            font-weight: bold;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #004d40;
+            color: white;
+        }
+        .btn-apply {
+            display: inline-block;
+            background: #d4af37;
+            color: #fff;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: 0.3s;
+            margin-top: 20px;
+        }
+        .btn-apply:hover { background: #004d40; }
         
-        .alumni-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-            gap: 30px; 
-            max-width: 1200px; 
-            margin: 0 auto 50px; 
-            padding: 0 20px; 
+        @media (max-width: 600px) {
+            .doc-grid { grid-template-columns: 1fr; }
         }
-
-        .alumni-card { 
-            background: #fff; 
-            border-radius: 15px; 
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1); 
-            padding: 30px; 
-            text-align: center; 
-            border-top: 6px solid #d4af37; 
-            transition: transform 0.3s ease; 
-        }
-
-        .alumni-card:hover { transform: translateY(-10px); }
-
-        .alumni-card img { 
-            width: 140px; 
-            height: 140px; 
-            border-radius: 50%; 
-            object-fit: cover; 
-            border: 4px solid #004d40; 
-            margin-bottom: 20px; 
-        }
-
-        .batch-tag { 
-            background: #004d40; 
-            color: #fff; 
-            padding: 5px 15px; 
-            border-radius: 25px; 
-            font-size: 0.85rem; 
-            font-weight: bold; 
-        }
-
-        .alumni-name { 
-            color: #004d40; 
-            margin: 15px 0 5px; 
-            font-size: 1.5rem; 
-            font-family: 'Cinzel', serif; 
-        }
-
-        .alumni-msg { 
-            font-style: italic; 
-            color: #666; 
-            line-height: 1.6; 
-            font-size: 0.95rem; 
-        }
-
-        #status-msg { text-align: center; font-size: 1.2rem; color: #004d40; padding: 50px; font-weight: bold; }
-        
-        /* Tagline style agar header.js mein nahi hai */
-        .tagline { text-align: center; color: #004d40; font-weight: bold; margin-top: -10px; margin-bottom: 20px; }
     </style>
 </head>
 <body>
 
     <div id="dynamic-header"></div>
-    <p class="tagline">Empowering Daughters, Building Future</p>
+    <p class="tagline" style="text-align:center; color:#004d40; font-weight:bold;">Empowering Daughters, Building Future</p>
 
-    <div class="alumni-header">
-        <h2>Our Distinguished Alumni</h2>
-        <p style="color: #666;">Celebrating the success of our bright stars.</p>
+    <div class="admission-container">
+        <h2 class="section-title">Admission Process 2026</h2>
+        
+        <div class="info-box">
+            <h3>Required Documents</h3>
+            <div class="doc-grid">
+                <ul class="doc-list">
+                    <li>Aadhar Card (Student & Parents)</li>
+                    <li>Previous Class Marksheet</li>
+                    <li>Transfer Certificate (Original)</li>
+                    <li>6 Passport size photos</li>
+                    <li>Caste Certificate (If applicable)</li>
+                </ul>
+                <ul class="doc-list">
+                    <li>Ration Card</li>
+                    <li>Blood Group</li>
+                    <li>Income Certificate</li>
+                    <li>Bank Passbook (Parents ki)</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2 class="section-title">Fee Structure</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Class Group</th>
+                    <th>Admission Fee</th>
+                    <th>Monthly Fee</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Class 1 to 5th (National Girls Primary School)</td>
+                    <td>₹XXXX</td>
+                    <td>₹XXXX</td>
+                </tr>
+                <tr>
+                    <td>Junior (6th - 8th)</td>
+                    <td>₹XXXX</td>
+                    <td>₹XXXX</td>
+                </tr>
+                <tr>
+                    <td>Highschool (Class 9)</td>
+                    <td>₹XXXX</td>
+                    <td>₹XXXX</td>
+                </tr>
+                <tr>
+                    <td>Intermediate (Class 11)</td>
+                    <td>₹XXXX</td>
+                    <td>₹XXXX</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <p>Admission ke baare mein adhik jankari ke liye:</p>
+            <a href="#" class="btn-apply">Download Prospectus</a>
+            <p style="font-size: 0.8rem; color: #777; margin-top: 15px;">Note: Naye admission ke liye school office mein direct sampark karein.</p>
+        </div>
     </div>
 
-    <div id="status-msg">Bismillah... Connecting to Alumni Database...</div>
-
-    <div class="alumni-grid" id="alumni-grid"></div>
-
     <script src="header.js"></script>
-
-    <script>
-        // Google Sheet Details
-        const sheetID = "1Ogkm-qycV58x9QGIq-oG8mY8oPREU_lAocXRJR4bDyc";
-        const dataURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
-
-        async function loadAlumni() {
-            const grid = document.getElementById('alumni-grid');
-            const status = document.getElementById('status-msg');
-
-            try {
-                const response = await fetch(dataURL);
-                const text = await response.text();
-                
-                // Parsing Google's JSON response
-                const tempData = JSON.parse(text.substring(47).slice(0, -2));
-                const rows = tempData.table.rows;
-
-                if (!rows || rows.length === 0) {
-                    status.innerHTML = "Sheet connected, but no data found.";
-                    return;
-                }
-
-                status.style.display = 'none';
-                grid.innerHTML = '';
-
-                rows.forEach(row => {
-                    // Mapping columns: A=Name, B=Batch, C=Designation, D=Photo, E=Message
-                    const name = row.c[0] ? row.c[0].v : '';
-                    const batch = row.c[1] ? row.c[1].v : 'N/A';
-                    const desig = row.c[2] ? row.c[2].v : '';
-                    const photo = row.c[3] ? row.c[3].v : 'images/default-user.jpg';
-                    const msg = row.c[4] ? row.c[4].v : '';
-
-                    if (name) {
-                        grid.innerHTML += `
-                            <div class="alumni-card">
-                                <img src="${photo}" alt="${name}" onerror="this.src='https://via.placeholder.com/150?text=No+Photo'">
-                                <br><span class="batch-tag">Batch: ${batch}</span>
-                                <h3 class="alumni-name">${name}</h3>
-                                <p style="color:#d4af37; font-weight:600; margin-bottom:10px;">${desig}</p>
-                                <p class="alumni-msg">"${msg}"</p>
-                            </div>
-                        `;
-                    }
-                });
-            } catch (error) {
-                console.error("Error:", error);
-                status.innerHTML = "<b>Connection Error!</b><br>Please refresh or check internet.";
-            }
-        }
-
-        // Dono scripts ko saath chalane ka behtareen tarika
-        window.addEventListener('load', () => {
-            loadAlumni();
-        });
-    </script>
 </body>
 </html>
