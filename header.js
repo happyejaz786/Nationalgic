@@ -146,7 +146,7 @@ function loadHeader() {
                             <li><a href="principal.html">Principal's Message</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">Admission</a></li>
+                    <li><a href="admission.html">Admission</a></li>
                     <li><a href="#">Gallery</a></li>
                     <li><a href="#">Contact Us</a></li>
                 </ul>
@@ -191,3 +191,4 @@ function toggleMenu() {
 
 
 window.onload = loadHeader;
+
