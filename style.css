@@ -1,0 +1,197 @@
+/* =========================================
+   1. GLOBAL RESET & FONTS
+   ========================================= */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Poppins:wght@300;400;500;700&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main { flex: 1; display: flex; flex-direction: column; align-items: center; }
+
+/* NOTE: HEADER, LOGO & NAVIGATION CSS REMOVED.
+   Ab ye saara design 'header.js' control karega.
+*/
+
+/* =========================================
+   2. TAGLINE STYLE (Royal & Stylish)
+   ========================================= */
+.tagline {
+    text-align: center;
+    padding: 30px 15px;
+    font-size: 1.6rem;
+    color: #004d40;
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    position: relative;
+    background: #fff;
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Gold Line Below Tagline */
+.tagline::after {
+    content: '';
+    display: block;
+    width: 100px;
+    height: 3px;
+    background-color: #d4af37; /* Gold */
+    margin-top: 15px;
+    border-radius: 2px;
+}
+
+/* =========================================
+   3. HERO BANNER & FOOTER
+   ========================================= */
+.hero-banner {
+    background: linear-gradient(135deg, #004d40, #00695c);
+    color: white;
+    padding: 40px 20px;
+    width: 90%;
+    max-width: 800px;
+    text-align: center;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    border: 2px solid #d4af37;
+    margin: 20px auto;
+    animation: pulse 2s infinite;
+}
+
+.hero-banner h1 { font-size: 2rem; margin-bottom: 10px; font-family: Cambria, serif;}
+.hero-banner p { font-size: 1.5rem; color: #d4af37; font-weight: bold; font-family: Cambria, serif;}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+.main-footer {
+    background-color: #002b24;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+    margin-top: auto;
+}
+
+/* =========================================
+   MESSAGE SECTION (Principal, Manager, President)
+   ========================================= */
+.message-section {
+    padding: 40px 20px;
+    background-color: #f0f4f3; /* Halka sa grey/green background */
+    display: flex;
+    justify-content: center;
+}
+
+.message-card {
+    background: #ffffff;
+    display: flex; /* Photo aur Text bagal-bagal */
+    flex-direction: row;
+    max-width: 1000px;
+    width: 100%;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1); /* Card ki parchhai */
+    border-radius: 12px;
+    overflow: hidden;
+    border-top: 5px solid #d4af37; /* Gold border upar */
+}
+
+/* Photo Wala Hissa */
+.message-photo {
+    background-color: #004d40;
+    color: white;
+    width: 300px; /* Fixed choudai */
+    padding: 30px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.message-photo img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%; /* Gol photo */
+    border: 5px solid #d4af37; /* Gold border photo ke charo taraf */
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.message-photo h4 {
+    font-size: 1.4rem;
+    font-family: 'Cinzel', serif;
+    margin-top: 10px;
+    color: #d4af37;
+}
+
+/* Likhawat Wala Hissa */
+.message-content {
+    padding: 40px;
+    flex: 1; /* Baaki jagah ye lega */
+    position: relative;
+}
+
+.quote-icon {
+    font-size: 4rem;
+    color: #e0e0e0;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-family: serif;
+    line-height: 1;
+}
+
+.message-content p {
+    font-size: 1.1rem;
+    color: #444;
+    margin-bottom: 20px;
+    position: relative; /* Quote ke upar aane ke liye */
+    z-index: 1;
+    line-height: 1.8;
+}
+
+.hindi-text {
+    font-size: 1.15rem;
+    color: #004d40;
+    font-weight: 500;
+    border-left: 4px solid #d4af37;
+    padding-left: 15px;
+    margin-top: 20px;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* --- MOBILE RESPONSIVE (Phone par kaisa dikhega) --- */
+@media (max-width: 768px) {
+    .message-card {
+        flex-direction: column; /* Upar-Niche */
+    }
+
+    .message-photo {
+        width: 100%; /* Poori choudai */
+        padding: 20px;
+    }
+
+    .message-photo img {
+        width: 140px;
+        height: 140px;
+    }
+
+    .message-content {
+        padding: 25px;
+    }
+}
