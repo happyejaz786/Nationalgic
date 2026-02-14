@@ -71,12 +71,13 @@
             btns.forEach(b => b.classList.remove('active'));
             event.target.classList.add('active');
 
-            if(type === 'Alumni') {
-                fields.innerHTML = `
-                    <div class="form-group"><label>Batch</label><input type="text" name="Batch" required></div>
-                    <div class="form-group"><label>Designation</label><input type="text" name="Designation" required></div>
-                    <div class="form-group"><label>Upload Photo</label><input type="file" name="PhotoFile" accept="image/*"></div>
-                `;
+if(type === 'Alumni') {
+    fields.innerHTML = `
+        <div class="form-group"><label>Batch</label><input type="text" name="Batch" required></div>
+        <div class="form-group"><label>Designation</label><input type="text" name="Designation" required></div>
+        <div class="form-group"><label>Upload Photo</label><input type="file" name="PhotoFile" accept="image/*"></div>
+    `;
+}
             } else {
                 fields.innerHTML = `<div class="form-group"><label>Mobile / Email</label><input type="text" name="EmailOrPhone" required></div>`;
             }
@@ -136,4 +137,5 @@
         }
     </script>
 </body>
+
 </html>
