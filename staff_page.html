@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Staff | National Girls Inter College</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Staff Page Specific Styles (Alumni Theme) */
+        .staff-section { padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
+        .staff-header { text-align: center; margin-bottom: 40px; }
+        .staff-header h2 { font-family: 'Cinzel', serif; color: #004d40; font-size: 2.5rem; }
+        
+        .filter-nav { text-align: center; margin-bottom: 30px; }
+        .filter-nav button { 
+            padding: 10px 25px; margin: 5px; border: none; border-radius: 5px;
+            background: #004d40; color: white; cursor: pointer; font-family: 'Poppins', sans-serif;
+            transition: 0.3s;
+        }
+        .filter-nav button:hover { background: #00695c; }
+
+        .staff-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 30px; 
+        }
+
+        .staff-card { 
+            background: #fff; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); 
+            padding: 30px; text-align: center; border-top: 6px solid #004d40;
+        }
+        .staff-card img { 
+            width: 150px; height: 150px; border-radius: 50%; object-fit: cover; 
+            border: 5px solid #f0f0f0; margin-bottom: 15px;
+        }
+        .staff-name { font-family: 'Cinzel', serif; color: #004d40; margin: 10px 0 5px; }
+        .staff-desig { font-weight: bold; color: #555; text-transform: uppercase; font-size: 0.9rem; }
+        .staff-qual { color: #00796b; font-size: 0.85rem; margin-bottom: 15px; }
+        .staff-msg { font-style: italic; color: #666; font-size: 0.95rem; line-height: 1.6; }
+    </style>
+</head>
+<body>
+
+    <div id="dynamic-header"></div>
+
+    <div class="staff-section">
+        <div class="staff-header">
+            <h2>Our Dedicated Staff</h2>
+        </div>
+
+        <div class="filter-nav">
+            <button onclick="filterStaff('All')">All Staff</button>
+            <button onclick="filterStaff('Teaching')">Teaching Staff</button>
+            <button onclick="filterStaff('Non-Teaching')">Non-Teaching Staff</button>
+        </div>
+
+        <div id="staff-grid" class="staff-grid">
+            <p id="loading-status" style="text-align: center;">Bismillah... Data load ho raha hai...</p>
+        </div>
+    </div>
+
+    <div id="dynamic-footer"></div>
+
+    <script src="header.js"></script>
+
+    <script>
+        // Aapka Sheet CSV Link
+        const sheet_url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRVyM2SZAEangKEM0uVXSzR047KPUaE7gwnXxClVKcCUwBNvbBRFXDT-oKInda9TakSrjNpx8lH30v8/pub?output=csv';
+        let staffData = [];
+
+        async function loadStaff() {
+            try {
+                const response = await fetch(sheet_url);
+                const data = await response.text();
+                const rows = data.split('\n').slice(1); 
+
+                staffData = rows.map(row => {
+                    // Regex for handling commas inside quotes
+                    const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                    return {
+                        name: cols[0]?.replace(/"/g, ''),
+                        desig: cols[1]?.replace(/"/g, ''),
+                        qual: cols[2]?.replace(/"/g, ''),
+                        type: cols[3]?.trim().replace(/"/g, ''),
+                        msg: cols[4]?.replace(/"/g, ''),
+                        photo: cols[5]?.trim().replace(/"/g, '')
+                    };
+                });
+                filterStaff('All');
+            } catch (error) {
+                document.getElementById('loading-status').innerHTML = "<b>Error!</b> Data load nahi ho paya.";
+            }
+        }
+
+        function filterStaff(type) {
+            const grid = document.getElementById('staff-grid');
+            grid.innerHTML = '';
+
+            staffData.forEach(s => {
+                if (type === 'All' || s.type === type) {
+                    if (s.name) {
+                        grid.innerHTML += `
+                            <div class="staff-card">
+                                <img src="${s.photo}" alt="${s.name}" onerror="this.src='https://via.placeholder.com/150?text=Staff+Photo'">
+                                <h3 class="staff-name">${s.name}</h3>
+                                <span class="staff-desig">${s.desig}</span>
+                                <p class="staff-qual">${s.qual}</p>
+                                <p class="staff-msg">"${s.msg}"</p>
+                            </div>
+                        `;
+                    }
+                }
+            });
+        }
+
+        // header.js ka function call karna aur staff data load karna
+        window.onload = function() {
+            if (typeof loadHeader === "function") {
+                loadHeader(); 
+            }
+            loadStaff();
+        };
+    </script>
+</body>
+</html>

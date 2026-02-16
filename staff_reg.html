@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Registration | NGIC</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .reg-container { 
+            max-width: 800px; margin: 50px auto; padding: 30px; 
+            background: #fff; border-radius: 15px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-top: 8px solid #004d40;
+        }
+        .form-header { text-align: center; margin-bottom: 30px; }
+        .form-header h2 { font-family: 'Cinzel', serif; color: #004d40; }
+        
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 8px; color: #333; }
+        .form-group input, .form-group select, .form-group textarea { 
+            width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; 
+            box-sizing: border-box; font-family: 'Poppins', sans-serif;
+        }
+        
+        .submit-btn { 
+            width: 100%; padding: 15px; background: #004d40; color: white; 
+            border: none; border-radius: 8px; font-size: 18px; cursor: pointer; 
+            font-weight: bold; transition: 0.3s;
+        }
+        .submit-btn:hover { background: #00695c; }
+        
+        #response-msg { text-align: center; margin-top: 20px; font-weight: bold; display: none; }
+    </style>
+</head>
+<body>
+
+    <div id="dynamic-header"></div>
+
+    <div class="reg-container">
+        <div class="form-header">
+            <h2>Staff Registration Form</h2>
+            <p>Please fill in your details to join the school directory.</p>
+        </div>
+
+        <form id="staffForm">
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" name="Name" placeholder="Enter Full Name" required>
+            </div>
+
+            <div class="form-group">
+                <label>Designation</label>
+                <input type="text" name="Designation" placeholder="e.g. Lecturer, Clerk" required>
+            </div>
+
+            <div class="form-group">
+                <label>Qualification</label>
+                <input type="text" name="Qualification" placeholder="e.g. M.A., B.Ed." required>
+            </div>
+
+            <div class="form-group">
+                <label>Staff Type</label>
+                <select name="Staff_type" required>
+                    <option value="">Select Type</option>
+                    <option value="Teaching">Teaching Staff</option>
+                    <option value="Non-Teaching">Non-Teaching Staff</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Message/Quote</label>
+                <textarea name="Message" rows="3" placeholder="A short message for students"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Photo URL (Google Drive/Direct Link)</label>
+                <input type="url" name="Photo_URL" placeholder="https://..." required>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">Bismillah - Submit Details</button>
+        </form>
+        <div id="response-msg"></div>
+    </div>
+
+    <div id="dynamic-footer"></div>
+
+    <script src="header.js"></script>
+
+    <script>
+        // Form Submission Logic
+        const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE'; // Apne Apps Script ka URL yahan dalein
+        const form = document.getElementById('staffForm');
+        const msg = document.getElementById('response-msg');
+        const btn = document.getElementById('submitBtn');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            btn.disabled = true;
+            btn.innerHTML = "Submitting...";
+            
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(response => {
+                    msg.innerHTML = "Mubarak ho! Data successfully save ho gaya.";
+                    msg.style.color = "green";
+                    msg.style.display = "block";
+                    form.reset();
+                    btn.disabled = false;
+                    btn.innerHTML = "Submit Details";
+                })
+                .catch(error => {
+                    msg.innerHTML = "Error! Kuch galti hui hai.";
+                    msg.style.color = "red";
+                    msg.style.display = "block";
+                    btn.disabled = false;
+                    btn.innerHTML = "Submit Details";
+                });
+        });
+
+        // Header/Footer load hone ke baad check
+        window.onload = function() {
+            if (typeof loadHeader === "function") { loadHeader(); }
+        };
+    </script>
+</body>
+</html>
