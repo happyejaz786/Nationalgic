@@ -67,37 +67,39 @@
     <script>
         // Google Sheet JSON Setup (Alumni Style)
         // Note: Apni Staff Sheet ki ID yahan replace karein agar alag hai
-        const sheetID = "1Ogkm-qycV58x9QGIq-oG8mY8oPREU_lAocXRJR4bDyc"; 
-        const dataURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
-        
-        let allStaff = [];
+        // --- Updated Logic ---
+const staffSheetID = "1Ogkm-qycV58x9QGIq-oG8mY8oPREU_lAocXRJR4bDyc"; // Staff Sheet ID
+const staffDataURL = `https://docs.google.com/spreadsheets/d/${staffSheetID}/gviz/tq?tqx=out:json`;
 
-        async function loadStaff() {
-            const grid = document.getElementById('staff-grid');
-            const status = document.getElementById('loading-status');
+let allStaffEntries = [];
 
-            try {
-                const response = await fetch(dataURL);
-                const text = await response.text();
-                const jsonData = JSON.parse(text.substring(47).slice(0, -2));
-                const rows = jsonData.table.rows;
+async function loadStaffEntries() {
+    const grid = document.getElementById('staff-grid');
+    const status = document.getElementById('loading-status');
 
-                allStaff = rows.map(row => ({
-                    // Mapping: A=Name(0), B=Desig(1), C=Qual(2), D=Type(3), E=Msg(4), F=Photo(5)
-                    name: row.c[0] ? row.c[0].v : '',
-                    desig: row.c[1] ? row.c[1].v : '',
-                    qual: row.c[2] ? row.c[2].v : '',
-                    type: row.c[3] ? row.c[3].v : '',
-                    msg: row.c[4] ? row.c[4].v : '',
-                    photo: row.c[5] ? row.c[5].v : 'images/default-user.jpg'
-                }));
+    try {
+        const response = await fetch(staffDataURL);
+        const text = await response.text();
+        const jsonData = JSON.parse(text.substring(47).slice(0, -2));
+        const rows = jsonData.table.rows;
 
-                status.style.display = 'none';
-                filterStaff('All');
-            } catch (error) {
-                status.innerHTML = "<b>Connection Error!</b><br>Check Google Sheet permissions.";
-            }
-        }
+        // Purana data clear karein
+        allStaffEntries = rows.map(row => ({
+            name: row.c[0] ? row.c[0].v : '',
+            desig: row.c[1] ? row.c[1].v : '',
+            qual: row.c[2] ? row.c[2].v : '',
+            type: row.c[3] ? row.c[3].v : '', // Teaching ya Non-Teaching
+            msg: row.c[4] ? row.c[4].v : '',
+            photo: row.c[5] ? row.c[5].v : 'images/default-user.jpg'
+        }));
+
+        status.style.display = 'none';
+        filterStaff('All'); // Initial display
+    } catch (error) {
+        console.error("Staff loading error:", error);
+        status.innerHTML = "<b>Data Load Error!</b> Check Staff Sheet ID.";
+    }
+}
 
         function filterStaff(staffType) {
             const grid = document.getElementById('staff-grid');
@@ -128,4 +130,5 @@
     </script>
 </body>
 </html>
+
 
