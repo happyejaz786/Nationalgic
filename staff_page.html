@@ -6,7 +6,6 @@
     <title>Our Staff | National Girls Inter College</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Staff Page Specific Styles (Alumni Theme) */
         .staff-section { padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
         .staff-header { text-align: center; margin-bottom: 40px; }
         .staff-header h2 { font-family: 'Cinzel', serif; color: #004d40; font-size: 2.5rem; }
@@ -17,7 +16,7 @@
             background: #004d40; color: white; cursor: pointer; font-family: 'Poppins', sans-serif;
             transition: 0.3s;
         }
-        .filter-nav button:hover { background: #00695c; }
+        .filter-nav button:hover { background: #d4af37; color: #004d40; }
 
         .staff-grid { 
             display: grid; 
@@ -27,16 +26,19 @@
 
         .staff-card { 
             background: #fff; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); 
-            padding: 30px; text-align: center; border-top: 6px solid #004d40;
+            padding: 30px; text-align: center; border-top: 6px solid #d4af37;
+            transition: 0.3s;
         }
+        .staff-card:hover { transform: translateY(-10px); }
         .staff-card img { 
             width: 150px; height: 150px; border-radius: 50%; object-fit: cover; 
-            border: 5px solid #f0f0f0; margin-bottom: 15px;
+            border: 4px solid #004d40; margin-bottom: 20px;
         }
-        .staff-name { font-family: 'Cinzel', serif; color: #004d40; margin: 10px 0 5px; }
-        .staff-desig { font-weight: bold; color: #555; text-transform: uppercase; font-size: 0.9rem; }
-        .staff-qual { color: #00796b; font-size: 0.85rem; margin-bottom: 15px; }
+        .staff-name { font-family: 'Cinzel', serif; color: #004d40; margin: 15px 0 5px; font-size: 1.5rem; }
+        .staff-desig { font-weight: bold; color: #d4af37; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 10px; display: block;}
+        .staff-qual { color: #00796b; font-size: 0.85rem; margin-bottom: 15px; font-weight: 600; }
         .staff-msg { font-style: italic; color: #666; font-size: 0.95rem; line-height: 1.6; }
+        #loading-status { text-align: center; font-weight: bold; padding: 50px; color: #004d40; }
     </style>
 </head>
 <body>
@@ -54,9 +56,8 @@
             <button onclick="filterStaff('Non-Teaching')">Non-Teaching Staff</button>
         </div>
 
-        <div id="staff-grid" class="staff-grid">
-            <p id="loading-status" style="text-align: center;">Bismillah... Data load ho raha hai...</p>
-        </div>
+        <div id="loading-status">Bismillah... Fetching Staff Directory...</div>
+        <div id="staff-grid" class="staff-grid"></div>
     </div>
 
     <div id="dynamic-footer"></div>
@@ -64,48 +65,54 @@
     <script src="header.js"></script>
 
     <script>
-        // Aapka Sheet CSV Link
-        const sheet_url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRVyM2SZAEangKEM0uVXSzR047KPUaE7gwnXxClVKcCUwBNvbBRFXDT-oKInda9TakSrjNpx8lH30v8/pub?output=csv';
-        let staffData = [];
+        // Google Sheet JSON Setup (Alumni Style)
+        // Note: Apni Staff Sheet ki ID yahan replace karein agar alag hai
+        const sheetID = "1Ogkm-qycV58x9QGIq-oG8mY8oPREU_lAocXRJR4bDyc"; 
+        const dataURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
+        
+        let allStaff = [];
 
         async function loadStaff() {
-            try {
-                const response = await fetch(sheet_url);
-                const data = await response.text();
-                const rows = data.split('\n').slice(1); 
+            const grid = document.getElementById('staff-grid');
+            const status = document.getElementById('loading-status');
 
-                staffData = rows.map(row => {
-                    // Regex for handling commas inside quotes
-                    const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-                    return {
-                        name: cols[0]?.replace(/"/g, ''),
-                        desig: cols[1]?.replace(/"/g, ''),
-                        qual: cols[2]?.replace(/"/g, ''),
-                        type: cols[3]?.trim().replace(/"/g, ''),
-                        msg: cols[4]?.replace(/"/g, ''),
-                        photo: cols[5]?.trim().replace(/"/g, '')
-                    };
-                });
+            try {
+                const response = await fetch(dataURL);
+                const text = await response.text();
+                const jsonData = JSON.parse(text.substring(47).slice(0, -2));
+                const rows = jsonData.table.rows;
+
+                allStaff = rows.map(row => ({
+                    // Mapping: A=Name(0), B=Desig(1), C=Qual(2), D=Type(3), E=Msg(4), F=Photo(5)
+                    name: row.c[0] ? row.c[0].v : '',
+                    desig: row.c[1] ? row.c[1].v : '',
+                    qual: row.c[2] ? row.c[2].v : '',
+                    type: row.c[3] ? row.c[3].v : '',
+                    msg: row.c[4] ? row.c[4].v : '',
+                    photo: row.c[5] ? row.c[5].v : 'images/default-user.jpg'
+                }));
+
+                status.style.display = 'none';
                 filterStaff('All');
             } catch (error) {
-                document.getElementById('loading-status').innerHTML = "<b>Error!</b> Data load nahi ho paya.";
+                status.innerHTML = "<b>Connection Error!</b><br>Check Google Sheet permissions.";
             }
         }
 
-        function filterStaff(type) {
+        function filterStaff(staffType) {
             const grid = document.getElementById('staff-grid');
             grid.innerHTML = '';
 
-            staffData.forEach(s => {
-                if (type === 'All' || s.type === type) {
-                    if (s.name) {
+            allStaff.forEach(person => {
+                if (staffType === 'All' || person.type === staffType) {
+                    if (person.name) {
                         grid.innerHTML += `
                             <div class="staff-card">
-                                <img src="${s.photo}" alt="${s.name}" onerror="this.src='https://via.placeholder.com/150?text=Staff+Photo'">
-                                <h3 class="staff-name">${s.name}</h3>
-                                <span class="staff-desig">${s.desig}</span>
-                                <p class="staff-qual">${s.qual}</p>
-                                <p class="staff-msg">"${s.msg}"</p>
+                                <img src="${person.photo}" alt="${person.name}" onerror="this.src='https://via.placeholder.com/150?text=Staff+Photo'">
+                                <h3 class="staff-name">${person.name}</h3>
+                                <span class="staff-desig">${person.desig}</span>
+                                <p class="staff-qual">Qualification: ${person.qual}</p>
+                                <p class="staff-msg">"${person.msg}"</p>
                             </div>
                         `;
                     }
@@ -113,13 +120,11 @@
             });
         }
 
-        // header.js ka function call karna aur staff data load karna
-        window.onload = function() {
-            if (typeof loadHeader === "function") {
-                loadHeader(); 
-            }
+        // Header aur Data dono load karne ke liye
+        window.addEventListener('load', () => {
+            if (typeof loadHeader === "function") { loadHeader(); }
             loadStaff();
-        };
+        });
     </script>
 </body>
 </html>
