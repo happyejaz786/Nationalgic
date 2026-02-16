@@ -65,41 +65,43 @@
     <script src="header.js"></script>
 
     <script>
-        // Google Sheet JSON Setup (Alumni Style)
-        // Note: Apni Staff Sheet ki ID yahan replace karein agar alag hai
-        // --- Updated Logic ---
-const staffSheetID = "1Ogkm-qycV58x9QGIq-oG8mY8oPREU_lAocXRJR4bDyc"; // Staff Sheet ID
-const staffDataURL = `https://docs.google.com/spreadsheets/d/${staffSheetID}/gviz/tq?tqx=out:json`;
+        // --- CONFIGURATION ---
+        const sheetID = "1Ogkm-qycV58x9QGIq-oG8mY8oPREU_lAocXRJR4bDyc"; 
+        // sheet=Sheet1 aur range=A2:F zaroori hai taaki header skip ho aur sahi tab load ho
+        const dataURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=Sheet1&range=A2:F`;
+        
+        let allStaff = [];
 
-let allStaffEntries = [];
+        async function loadStaff() {
+            const grid = document.getElementById('staff-grid');
+            const status = document.getElementById('loading-status');
 
-async function loadStaffEntries() {
-    const grid = document.getElementById('staff-grid');
-    const status = document.getElementById('loading-status');
+            try {
+                const response = await fetch(dataURL);
+                const text = await response.text();
+                // Google JSON data ko extract karne ke liye logic
+                const jsonData = JSON.parse(text.substring(47).slice(0, -2));
+                const rows = jsonData.table.rows;
 
-    try {
-        const response = await fetch(staffDataURL);
-        const text = await response.text();
-        const jsonData = JSON.parse(text.substring(47).slice(0, -2));
-        const rows = jsonData.table.rows;
+                allStaff = rows.map(row => {
+                    return {
+                        // row.c[0] = Name, [1] = Desig, [2] = Qual, [3] = Type, [4] = Msg, [5] = Photo
+                        name: row.c[0] ? row.c[0].v : '',
+                        desig: row.c[1] ? row.c[1].v : '',
+                        qual: row.c[2] ? row.c[2].v : '',
+                        type: row.c[3] ? row.c[3].v : '',
+                        msg: row.c[4] ? row.c[4].v : '',
+                        photo: row.c[5] ? row.c[5].v : 'images/default-user.jpg'
+                    };
+                });
 
-        // Purana data clear karein
-        allStaffEntries = rows.map(row => ({
-            name: row.c[0] ? row.c[0].v : '',
-            desig: row.c[1] ? row.c[1].v : '',
-            qual: row.c[2] ? row.c[2].v : '',
-            type: row.c[3] ? row.c[3].v : '', // Teaching ya Non-Teaching
-            msg: row.c[4] ? row.c[4].v : '',
-            photo: row.c[5] ? row.c[5].v : 'images/default-user.jpg'
-        }));
-
-        status.style.display = 'none';
-        filterStaff('All'); // Initial display
-    } catch (error) {
-        console.error("Staff loading error:", error);
-        status.innerHTML = "<b>Data Load Error!</b> Check Staff Sheet ID.";
-    }
-}
+                status.style.display = 'none';
+                filterStaff('All');
+            } catch (error) {
+                console.error("Error fetching staff:", error);
+                status.innerHTML = "<b>Connection Error!</b><br>Please check Google Sheet permissions or Sheet name.";
+            }
+        }
 
         function filterStaff(staffType) {
             const grid = document.getElementById('staff-grid');
@@ -113,7 +115,7 @@ async function loadStaffEntries() {
                                 <img src="${person.photo}" alt="${person.name}" onerror="this.src='https://via.placeholder.com/150?text=Staff+Photo'">
                                 <h3 class="staff-name">${person.name}</h3>
                                 <span class="staff-desig">${person.desig}</span>
-                                <p class="staff-qual">Qualification: ${person.qual}</p>
+                                <p class="staff-qual">Education: ${person.qual}</p>
                                 <p class="staff-msg">"${person.msg}"</p>
                             </div>
                         `;
@@ -122,13 +124,13 @@ async function loadStaffEntries() {
             });
         }
 
-        // Header aur Data dono load karne ke liye
+        // Ensuring both header and staff data load together
         window.addEventListener('load', () => {
-            if (typeof loadHeader === "function") { loadHeader(); }
+            if (typeof loadHeader === "function") {
+                loadHeader(); 
+            }
             loadStaff();
         });
     </script>
 </body>
 </html>
-
-
