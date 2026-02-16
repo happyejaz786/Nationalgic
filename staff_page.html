@@ -65,27 +65,26 @@
     <script src="header.js"></script>
 
     <script>
-        // --- CONFIGURATION ---
-        const sheetID = "1Ogkm-qycV58x9QGIq-oG8mY8oPREU_lAocXRJR4bDyc"; 
-        // sheet=Sheet1 aur range=A2:F zaroori hai taaki header skip ho aur sahi tab load ho
-        const dataURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=Sheet1&range=A2:F`;
+        // --- Nayi Configuration ---
+        const staffSheetID = "1hiupz9hNvZP4o9hV90_LQqXz6EdkQqdT4VvyEij8LjE"; 
+        // Sheet name 'staff' aur range A2 se start taaki header skip ho jaye
+        const staffDataURL = `https://docs.google.com/spreadsheets/d/${staffSheetID}/gviz/tq?tqx=out:json&sheet=staff&range=A2:F`;
         
-        let allStaff = [];
+        let allStaffEntries = [];
 
-        async function loadStaff() {
+        async function loadStaffEntries() {
             const grid = document.getElementById('staff-grid');
             const status = document.getElementById('loading-status');
 
             try {
-                const response = await fetch(dataURL);
+                // Cache bust karne ke liye timestamp add kiya hai
+                const response = await fetch(staffDataURL + '&cache=' + new Date().getTime());
                 const text = await response.text();
-                // Google JSON data ko extract karne ke liye logic
                 const jsonData = JSON.parse(text.substring(47).slice(0, -2));
                 const rows = jsonData.table.rows;
 
-                allStaff = rows.map(row => {
+                allStaffEntries = rows.map(row => {
                     return {
-                        // row.c[0] = Name, [1] = Desig, [2] = Qual, [3] = Type, [4] = Msg, [5] = Photo
                         name: row.c[0] ? row.c[0].v : '',
                         desig: row.c[1] ? row.c[1].v : '',
                         qual: row.c[2] ? row.c[2].v : '',
@@ -98,8 +97,8 @@
                 status.style.display = 'none';
                 filterStaff('All');
             } catch (error) {
-                console.error("Error fetching staff:", error);
-                status.innerHTML = "<b>Connection Error!</b><br>Please check Google Sheet permissions or Sheet name.";
+                console.error("Staff fetch error:", error);
+                status.innerHTML = "<b>Data Load Nahi Hua!</b><br>Check karein ki Google Sheet 'Anyone with link' par hai.";
             }
         }
 
@@ -107,7 +106,7 @@
             const grid = document.getElementById('staff-grid');
             grid.innerHTML = '';
 
-            allStaff.forEach(person => {
+            allStaffEntries.forEach(person => {
                 if (staffType === 'All' || person.type === staffType) {
                     if (person.name) {
                         grid.innerHTML += `
@@ -124,12 +123,9 @@
             });
         }
 
-        // Ensuring both header and staff data load together
         window.addEventListener('load', () => {
-            if (typeof loadHeader === "function") {
-                loadHeader(); 
-            }
-            loadStaff();
+            if (typeof loadHeader === "function") { loadHeader(); }
+            loadStaffEntries();
         });
     </script>
 </body>
