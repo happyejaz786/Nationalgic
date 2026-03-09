@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>National GIC Admission</title>
+    <title>Redirecting to Admission Form...</title>
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
-        iframe { width: 100%; height: 100vh; border: none; }
+        body { font-family: sans-serif; text-align: center; padding-top: 50px; }
+        .loader { border: 5px solid #f3f3f3; border-top: 5px solid #3498db; border-radius: 50%; width: 50px; height: 50px; animation: spin 2s linear infinite; margin: 20px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
-    <iframe src="https://script.google.com/macros/s/AKfycbx3psW4Wt_VXA95-S79iTTR1jobEwbgb4gV1UOgL4UKXEwGsNxrcUy_sCSQ7tc568CWQA/exec" 
-        style="width:100%; height:100vh; border:none;" 
-        allow="autoplay">
-    </iframe>
+    <div class="loader"></div>
+    <p>Please wait, opening National GIC Admission Portal...</p>
+
+    <script>
+        // Aapka Latest Web App URL yahan hona chahiye
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbzck8wPLKnYXEISSmNEzjWKZI16kiqLCd8lZ-YKH3eWLown3XNP0-f7QluxzKaE0DXPAg/exec";
+        
+        // Redirect logic
+        window.location.replace(GAS_URL);
+    </script>
 </body>
-
 </html>
-
