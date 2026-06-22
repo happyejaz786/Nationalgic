@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>National Girls Inter College | Home</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Banner & Marquee Styles */
+        #banner-container {
+            width: 100%; height: 400px; background-size: cover; 
+            background-position: center; transition: background 1s ease-in-out;
+        }
+        .status-bar {
+            background: #d4af37; color: #000; padding: 10px; font-weight: bold;
+            overflow: hidden; white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <div id="dynamic-header"></div> <!-- Menu yahan aayega -->
+
+    <!-- Slider Container -->
+    <div class="slider-wrapper">
+        <div id="banner-container"></div>
+        <div class="slider-controls">
+            <button onclick="prevSlide()">❮</button>
+            <button id="pauseBtn" onclick="togglePause()">II</button>
+            <button onclick="nextSlide()">❯</button>
+        </div>
+    </div>
+
+    <!-- Status Bar -->
+    <div class="status-bar-container">
+        <div class="status-heading">LATEST UPDATES : </div>
+        <marquee onmouseover="this.stop();" onmouseout="this.start();">
+            👉 समस्त छात्र-छात्राएं जिन्होंने अभी तक अपने बैंक खाते में आधार सीडिंग नहीं कराया है, तत्काल अपने संचालित बैंक खाते में आधार सीडिंग करा लें।
+        </marquee>
+    </div>
+
+    <main>...</main>
+    <script src="header.js"></script>
+    <script src="banner.js"></script>
+</body>
+</html>
