@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 11 Admission & Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            padding: 20px;
+        }
+        .form-container {
+            background: #fff;
+            padding: 25px;
+            max-width: 900px;
+            margin: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h2, h3, h4 { color: #333; }
+        h3 { border-bottom: 2px solid #0056b3; padding-bottom: 5px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        /* Locked fields ki styling */
+        input[readonly] {
+            background-color: #e9ecef;
+            color: #495057;
+            cursor: not-allowed;
+            font-weight: bold;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .step { display: none; }
+        .step.active { display: block; }
+        .btn-group {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover { background-color: #004494; }
+        button:disabled { background-color: #cccccc; cursor: not-allowed; }
+        hr { border: 0; border-top: 1px solid #eee; margin: 20px 0; }
+        .required-star { color: red; }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Class 11 Student Admission Form</h2>
+    <form id="admissionForm">
+        
+        <div id="part1" class="step active">
+            <h3>Part 1: Basic Details</h3>
+            
+            <div class="grid-2">
+                <div class="form-group"><label>Student Name <span class="required-star">*</span></label><input type="text" id="student_name" name="student_name" required></div>
+                <div class="form-group"><label>Student Aadhaar No. (12 Digits) <span class="required-star">*</span></label><input type="text" id="student_aadhaar" name="student_aadhaar" placeholder="XXXX-XXXX-XXXX" oninput="restrictToNumbersAndHyphens(this)" required></div>
+
+                <div class="form-group"><label>Father's Name <span class="required-star">*</span></label><input type="text" id="father_name" name="father_name" required></div>
+                <div class="form-group"><label>Father's Aadhaar No. (12 Digits) <span class="required-star">*</span></label><input type="text" id="father_aadhaar" name="father_aadhaar" placeholder="XXXX-XXXX-XXXX" oninput="restrictToNumbersAndHyphens(this)" required></div>
+
+                <div class="form-group"><label>Mother's Name <span class="required-star">*</span></label><input type="text" id="mother_name" name="mother_name" required></div>
+                <div class="form-group"><label>Mother's Aadhaar No. (12 Digits) <span class="required-star">*</span></label><input type="text" id="mother_aadhaar" name="mother_aadhaar" placeholder="XXXX-XXXX-XXXX" oninput="restrictToNumbersAndHyphens(this)" required></div>
+                
+                <div class="form-group"><label>Date of Birth</label><input type="date" id="dob" name="dob"></div>
+                <div class="form-group"><label>Mobile Number</label><input type="tel" id="mobile" name="mobile"></div>
+                
+                <div class="form-group"><label>Email ID</label><input type="email" id="email" name="email"></div>
+                <div class="form-group">
+                    <label>Blood Group</label>
+                    <select id="blood_group" name="blood_group">
+                        <option value="">Select</option>
+                        <option value="A+">A+</option><option value="A-">A-</option>
+                        <option value="B+">B+</option><option value="O+">O+</option>
+                        <option value="O-">O-</option><option value="AB+">AB+</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>Nationality</label><input type="text" id="nationality" name="nationality" value="Indian" readonly></div>
+            </div>
+
+            <hr>
+            <h4>Address Details</h4>
+            <div class="grid-2">
+                <div class="form-group"><label>Address</label><input type="text" id="address" name="address"></div>
+                <div class="form-group"><label>District</label><input type="text" id="district" name="district" value="SHAHJAHANPUR" readonly></div>
+                <div class="form-group"><label>Pincode</label><input type="text" id="pincode" name="pincode" value="242001" readonly></div>
+            </div>
+
+            <hr>
+            <h4>Income Details</h4>
+            <div class="grid-2">
+                <div class="form-group"><label>Annual Income</label><input type="number" id="income_amount" name="income_amount"></div>
+                <div class="form-group"><label>Certificate Number</label><input type="text" id="income_cert_no" name="income_cert_no"></div>
+                <div class="form-group"><label>Application Number</label><input type="text" id="income_app_no" name="income_app_no"></div>
+                <div class="form-group"><label>Issue Date</label><input type="date" id="income_issue_date" name="income_issue_date"></div>
+            </div>
+
+            <hr>
+            <h4>Caste Details</h4>
+            <div class="grid-2">
+                <div class="form-group"><label>Social Category</label><input type="text" id="category" name="category"></div>
+                <div class="form-group"><label>Certificate Number</label><input type="text" id="caste_cert_no" name="caste_cert_no"></div>
+                <div class="form-group"><label>Application Number</label><input type="text" id="caste_app_no" name="caste_app_no"></div>
+                <div class="form-group"><label>Issue Date</label><input type="date" id="caste_issue_date" name="caste_issue_date"></div>
+            </div>
+
+            <hr>
+            <h4>Bank Details</h4>
+            <div class="grid-2">
+                <div class="form-group"><label>Bank Name</label><input type="text" id="bank_name" name="bank_name"></div>
+                <div class="form-group"><label>Branch Name</label><input type="text" id="branch_name" name="branch_name"></div>
+                <div class="form-group"><label>IFSC Code</label><input type="text" id="ifsc_code" name="ifsc_code"></div>
+                <div class="form-group"><label>Account Number</label><input type="text" id="account_number" name="account_number"></div>
+            </div>
+
+            <div class="btn-group">
+                <button type="button" disabled>Previous</button>
+                <button type="button" onclick="nextStep(1)">Next</button>
+            </div>
+        </div>
+
+        <div id="part2" class="step">
+            <h3>Part 2: Subject Details</h3>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label>Medium Code</label>
+                    <select id="MediumCode" name="MediumCode">
+                        <option value="1-Hindi">1-Hindi</option>
+                        <option value="2-English">2-English</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>Subject Group Code</label><input type="text" id="SubjectGroupCode" name="SubjectGroupCode" value="Arts" readonly></div>
+                <div class="form-group"><label>Subject 01 Code (Default)</label><input type="text" id="Subject01Code" name="Subject01Code" value="101-HINDI" readonly></div>
+                <div class="form-group"><label>Subject 02 Code</label><input type="text" id="Subject02Code" name="Subject02Code"></div>
+                <div class="form-group"><label>Subject 03 Code</label><input type="text" id="Subject03Code" name="Subject03Code"></div>
+                <div class="form-group"><label>Subject 04 Code</label><input type="text" id="Subject04Code" name="Subject04Code"></div>
+                <div class="form-group"><label>Subject 05 Code</label><input type="text" id="Subject05Code" name="Subject05Code"></div>
+                <div class="form-group"><label>Subject 06 Code</label><input type="text" id="Subject06Code" name="Subject06Code"></div>
+                <div class="form-group"><label>Subject 07 Code (Default)</label><input type="text" id="Subject07Code" name="Subject07Code" value="973-phy.edu" readonly></div>
+                <div class="form-group"><label>Subject VOC Code</label><input type="text" id="SubjectVOCCode" name="SubjectVOCCode"></div>
+            </div>
+            
+            <div class="btn-group">
+                <button type="button" onclick="prevStep(2)">Previous</button>
+                <button type="button" onclick="nextStep(2)">Next</button>
+            </div>
+        </div>
+
+        <div id="part3" class="step">
+            <h3>Part 3: School & Academic Details</h3>
+            
+            <h4>Class & Section</h4>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label>Class</label>
+                    <select id="class_level" name="class_level">
+                        <option value="9">Class 9</option>
+                        <option value="10">Class 10</option>
+                        <option value="11" selected>Class 11</option>
+                        <option value="12">Class 12</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Section</label>
+                    <select id="section" name="section">
+                        <option value="A">Section A</option>
+                        <option value="B">Section B</option>
+                        <option value="C">Section C</option>
+                    </select>
+                </div>
+            </div>
+
+            <hr>
+            <h4>General Identifiers</h4>
+            <div class="grid-2">
+                <div class="form-group"><label>PEN (11 Digits)</label><input type="text" id="pen_number" name="pen_number" oninput="restrictToNumbersAndHyphens(this)"></div>
+                <div class="form-group"><label>APAAR ID (12 Digits)</label><input type="text" id="apaar_id" name="apaar_id" oninput="restrictToNumbersAndHyphens(this)"></div>
+                <div class="form-group"><label>SR Number (5 Digits)</label><input type="text" id="sr_number" name="sr_number" oninput="restrictToNumbersAndHyphens(this)"></div>
+            </div>
+
+            <hr>
+            <h4>Previous Academic Details</h4>
+            <div class="grid-2">
+                <div class="form-group"><label>Board Roll Number</label><input type="text" id="board_roll_no" name="board_roll_no"></div>
+                <div class="form-group"><label>Max Marks</label><input type="number" id="max_marks" name="max_marks" oninput="calculatePercentage()"></div>
+                <div class="form-group"><label>Obtained Marks</label><input type="number" id="obtained_marks" name="obtained_marks" oninput="calculatePercentage()"></div>
+                <div class="form-group"><label>Passing %</label><input type="text" id="passing_percentage" name="passing_percentage" readonly></div>
+            </div>
+
+            <div class="btn-group">
+                <button type="button" onclick="prevStep(3)">Previous</button>
+                <button type="button" onclick="submitForm()">Submit Data</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        loadFormData();
+    });
+
+    // Sirf Numbers aur Hyphen allow karne wala function
+    function restrictToNumbersAndHyphens(input) {
+        input.value = input.value.replace(/[^0-9-]/g, '');
+    }
+
+    // Sirf digits count karne ka function (hyphens ignore karke)
+    function countDigits(str) {
+        return (str.match(/\d/g) || []).length;
+    }
+
+    // Part 1 ke fields ki validation
+    function validatePart1() {
+        let sAadhaar = document.getElementById('student_aadhaar').value;
+        let fAadhaar = document.getElementById('father_aadhaar').value;
+        let mAadhaar = document.getElementById('mother_aadhaar').value;
+
+        if (sAadhaar && countDigits(sAadhaar) !== 12) { alert("Student Aadhaar must have exactly 12 digits!"); return false; }
+        if (fAadhaar && countDigits(fAadhaar) !== 12) { alert("Father Aadhaar must have exactly 12 digits!"); return false; }
+        if (mAadhaar && countDigits(mAadhaar) !== 12) { alert("Mother Aadhaar must have exactly 12 digits!"); return false; }
+        return true;
+    }
+
+    // Part 3 ke fields ki validation
+    function validatePart3() {
+        let pen = document.getElementById('pen_number').value;
+        let apaar = document.getElementById('apaar_id').value;
+        let sr = document.getElementById('sr_number').value;
+
+        if (pen && countDigits(pen) !== 11) { alert("PEN Number must have exactly 11 digits!"); return false; }
+        if (apaar && countDigits(apaar) !== 12) { alert("APAAR ID must have exactly 12 digits!"); return false; }
+        if (sr && countDigits(sr) !== 5) { alert("SR Number must have exactly 5 digits!"); return false; }
+        return true;
+    }
+
+    function saveCurrentStepData(stepIndex) {
+        const stepDiv = document.getElementById('part' + stepIndex);
+        const inputs = stepDiv.querySelectorAll('input, select');
+        inputs.forEach(input => {
+            localStorage.setItem(input.id, input.value);
+        });
+    }
+
+    function loadFormData() {
+        const inputs = document.querySelectorAll('#admissionForm input, #admissionForm select');
+        inputs.forEach(input => {
+            if (localStorage.getItem(input.id)) {
+                // Readonly fields ko localStorage se overwrite na hone den
+                if(!input.hasAttribute('readonly')) {
+                    input.value = localStorage.getItem(input.id);
+                }
+            }
+        });
+    }
+
+    function calculatePercentage() {
+        let obtained = parseFloat(document.getElementById('obtained_marks').value) || 0;
+        let max = parseFloat(document.getElementById('max_marks').value) || 0;
+        let percentageField = document.getElementById('passing_percentage');
+
+        if (max > 0) {
+            let percent = (obtained / max) * 100;
+            percentageField.value = percent.toFixed(2);
+        } else {
+            percentageField.value = '';
+        }
+    }
+
+    function nextStep(currentStep) {
+        // Validation check before moving to next step
+        if (currentStep === 1 && !validatePart1()) return;
+
+        saveCurrentStepData(currentStep);
+        document.getElementById('part' + currentStep).classList.remove('active');
+        document.getElementById('part' + (currentStep + 1)).classList.add('active');
+    }
+
+    function prevStep(currentStep) {
+        saveCurrentStepData(currentStep);
+        document.getElementById('part' + currentStep).classList.remove('active');
+        document.getElementById('part' + (currentStep - 1)).classList.add('active');
+    }
+
+    function submitForm() {
+		if (!validatePart3()) return;
+		saveCurrentStepData(3);
+		
+		const form = document.getElementById('admissionForm');
+		const formData = new FormData(form);
+		
+		// Yahan Apna Deploy kiya hua URL daalein
+		const url = 'https://script.google.com/macros/s/AKfycbx4PYsMT5PPPKGwIOJLZCyP3A0qM-XpDeG20PQV-7EWDjlNbmO9ZG35JJSd_mmymTLbfw/exec'; 
+
+		fetch(url, { method: 'POST', body: formData })
+		.then(response => response.text())
+		.then(text => {
+			if(text === 'Success') {
+				alert("Data Google Sheet mein save ho gaya hai!");
+				localStorage.clear();
+				form.reset();
+				location.reload();
+			} else {
+				alert("Error in submission.");
+			}
+		})
+		.catch(error => alert("Connection error!"));
+	}
+</script>
+
+</body>
+</html>
